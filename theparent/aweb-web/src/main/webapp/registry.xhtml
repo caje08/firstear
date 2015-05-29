@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+	<title>Registry</title>
+	<h:outputStylesheet library="css" name="default.css" />
+	<h:outputStylesheet library="css" name="cssLayout.css" />
+
+</h:head>
+<h:body>
+	<h:form>
+		<h:outputLabel value="Name" />
+		<h:inputText value="#{registryMB.name}" />
+		<br></br>
+		<h:outputLabel value="Email" />
+		<h:inputText value="#{registryMB.email}" />
+		<br></br>
+		<h:outputLabel value="Password" />
+		<h:inputSecret value="#{registryMB.password}" />
+		<br></br>
+		<h:outputLabel value="Confirm Password" />
+		<h:inputSecret value="#{registryMB.confirmPassword}" />
+		<br></br>
+		<h:outputLabel value="Data de Nascimento (formato AAAA/MM/DD)" />
+		<h:inputText value="#{registryMB.datanascimento}" />
+		<br></br>
+		<h:commandButton action="#{registryMB.submit}"  value="Submit" />
+		<h:commandButton action="#{registryMB.cancel()}" value="Cancel" />
+		<br></br>
+		<h:outputText value="#{registryMB.errorMessage}" />
+	</h:form>
+</h:body>
+</html>
+

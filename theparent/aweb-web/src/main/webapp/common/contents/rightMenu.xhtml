@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:body>
+	<ui:composition>
+
+		<h:form rendered="#{!render.editUser}">
+			<h:commandButton action="#{activeSession.editUser()}"
+				value="Edit user" />
+		</h:form>
+		
+		<h:form rendered="#{!render.newMusic}">
+			<h:commandButton action="#{activeSession.newMusicStart()}"
+				value="Add Music" />
+		</h:form>
+
+		<!-- User Editor -->
+		<div id="edit_user">
+			<h:form rendered="#{render.editUser}">
+				<h2>Edit User:</h2>
+				<h:outputLabel value="New User Name:" />
+				<h:inputText value="#{editUser.newUserName}" />
+				<h:outputLabel value="New Email:" />
+				<h:inputText value="#{editUser.newEmail}" />
+				<h:commandButton action="#{activeSession.saveUserChanges()}"
+					value="Save Changes" />
+			</h:form>
+
+			<h:form rendered="#{render.editUser}">
+				<h:commandButton action="#{render.setEditUserPassword(true)}"
+					value="Change Password" />
+			</h:form>
+
+			<h:form rendered="#{render.editUserPassword}">
+				<h:outputLabel value="Old Password:" />
+				<h:inputSecret value="#{editUser.oldPass}" />
+				<h:outputLabel value="New Password:" />
+				<h:inputSecret value="#{editUser.newPass}" />
+				<h:outputLabel value="Repeat New Password:" />
+				<h:inputSecret value="#{editUser.repeatPass}" />
+				<h:commandButton action="#{activeSession.saveUserPasswordChanges()}"
+					value="Save Password" />
+			</h:form>
+
+			<h:form rendered="#{render.editUser}">
+				<h:commandButton action="#{activeSession.editUserCancel()}"
+					value="Cancel" />
+			</h:form>
+		</div>
+
+		<div id="edit_music">
+			<!-- Music Editor -->
+			<h:form rendered="#{render.editMusic}">
+				<h2>Edit Music:</h2>
+				<h:outputLabel value="Track Name:" />
+				<h:inputText value="#{editMusic.newName}" />
+				<h:outputLabel value="Artist:" />
+				<h:inputText value="#{editMusic.newArtist}" />
+				<h:outputLabel value="Album:" />
+				<h:inputText value="#{editMusic.newAlbum}" />
+				<h:commandButton action="#{activeSession.saveMusicChanges()}"
+					value="Save Changes" />
+				<h:commandButton action="#{render.setEditMusic(false)}"
+					value="Cancel" />
+			</h:form>
+		</div>
+
+		<div id="new_music">
+			<!-- Add Music -->
+			<h:form rendered="#{render.newMusic}">
+				<h2>Add Music:</h2>
+				<h:outputLabel value="Track Name:" />
+				<h:inputText value="#{newMusic.newName}" />
+				<h:outputLabel value="Artist:" />
+				<h:inputText value="#{newMusic.newArtist}" />
+				<h:outputLabel value="Album:" />
+				<h:inputText value="#{newMusic.newAlbum}" />
+				<h:commandButton value="Browse file..." />
+				<h:commandButton action="#{activeSession.newMusicEnd()}"
+					value="Done" />
+				<h:commandButton action="#{activeSession.newMusicCancel()}"
+					value="Cancel" />
+			</h:form>
+		</div>
+
+	</ui:composition>
+</h:body>
+</html>
