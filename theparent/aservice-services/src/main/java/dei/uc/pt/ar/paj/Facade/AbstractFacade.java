@@ -1,4 +1,4 @@
-package dei.uc.pt.ar.paj;
+package dei.uc.pt.ar.paj.Facade;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,7 +26,12 @@ public abstract class AbstractFacade<T> {
 	}
 
 	protected abstract EntityManager getEntityManager();
-
+	
+	
+	public void merge(T entity) {
+		getEntityManager().merge(entity);
+	}
+	
 	public void create(T entity) {
 		getEntityManager().persist(entity);
 	}

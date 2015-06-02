@@ -24,12 +24,27 @@
 				value="#{activeSession.userplaylistsdisplay}" var="playlist">
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="PlayLists:" />
+						<h:outputText value="PlayList" />
 					</f:facet>
 					<h:commandButton
 						action="#{activeSession.setActivePlayList(playlist)}"
 						value="#{playlist.designacao}" />
 				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Size" />
+					</f:facet>
+					<h:commandButton value="#{playlist.songs.size()}" />
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Added" />
+					</f:facet>
+					<h:commandButton value="#{playlist.datacriacao}" />
+				</h:column>
+				
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value=" " />

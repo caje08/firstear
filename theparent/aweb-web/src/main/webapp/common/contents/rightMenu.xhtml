@@ -34,6 +34,8 @@
 			</h:form>
 
 			<h:form rendered="#{render.editUserPassword}">
+				<h:outputLabel value="#{editUser.mensagem}" />
+				<br />
 				<h:outputLabel value="Old Password:" />
 				<h:inputSecret value="#{editUser.oldPass}" />
 				<h:outputLabel value="New Password:" />
@@ -62,6 +64,9 @@
 				<h:inputText value="#{editMusic.newArtist}" />
 				<h:outputLabel value="Album:" />
 				<h:inputText value="#{editMusic.newAlbum}" />
+				
+				
+				
 				<h:commandButton action="#{activeSession.saveMusicChanges()}"
 					value="Save Changes" />
 				<h:commandButton action="#{render.setEditMusic(false)}"
@@ -79,7 +84,7 @@
 				<h:inputText value="#{newMusic.newArtist}" />
 				<h:outputLabel value="Album:" />
 				<h:inputText value="#{newMusic.newAlbum}" />
-				<h:commandButton value="Browse file..." />
+
 				<h:commandButton action="#{activeSession.newMusicEnd()}"
 					value="Done" />
 				<h:commandButton action="#{activeSession.newMusicCancel()}"
