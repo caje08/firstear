@@ -10,7 +10,7 @@
 			<h:commandButton action="#{activeSession.editUser()}"
 				value="Edit user" />
 		</h:form>
-		
+
 		<h:form rendered="#{!render.newMusic}">
 			<h:commandButton action="#{activeSession.newMusicStart()}"
 				value="Add Music" />
@@ -42,12 +42,14 @@
 				<h:inputSecret value="#{editUser.repeatPass}" />
 				<h:commandButton action="#{activeSession.saveUserPasswordChanges()}"
 					value="Save Password" />
+
 			</h:form>
 
 			<h:form rendered="#{render.editUser}">
 				<h:commandButton action="#{activeSession.editUserCancel()}"
 					value="Cancel" />
 			</h:form>
+
 		</div>
 
 		<div id="edit_music">

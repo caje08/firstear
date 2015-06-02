@@ -18,6 +18,9 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import dei.uc.pt.ar.paj.UserEntity;
 
 
@@ -30,23 +33,25 @@ import dei.uc.pt.ar.paj.UserEntity;
 public class LoginMB implements Serializable{
 
     private static final long serialVersionUID = -6202006843421064331L;
-
+    static Logger logger = LoggerFactory.getLogger(LoginMB.class);
     //The credentials to search for
     private String email;
     private String password;
     private String errorMessage;
     @EJB
 	private UserFacade userFacade;
-    @Inject
-    private UserSession userSession;
+
     @EJB
     private PasswordEJB pw;
+    @Inject
+    private UserSession userSession;
+   
     @Inject
 	ActiveSession session;
 	
 	@Inject
 	VirtualEJB ejb;
-
+    
     /**
      * Creates a new instance of LoginMB
      */
@@ -102,10 +107,11 @@ public class LoginMB implements Serializable{
     }
     
     public String searchUser() {
-        userSession.setLoggedUser(userFacade.findByEmailPass(email, pw.encrypt(password)));
+    	String passw=pw.encrypt(password);
+        userSession.setLoggedUser(userFacade.findByEmailPass(email, passw));
         if (userSession.getLoggedUser() != null) {
-        	System.out.println("Logged_user= "+this.email);
-        	doLogin(0);  
+        	logger.info("Logged_user= "+this.email);
+//        	doLogin(0);  
             return "index";
         } else {
             this.errorMessage = "Email/Password combination not found! Please try again";
@@ -148,10 +154,19 @@ public class LoginMB implements Serializable{
     public UserEntity getLoggedUser(){
         return userSession.getLoggedUser();
     }
-    public void doLogin(int i){
+    public void doLogin(){
+//    	UserEntity usertmp1= new UserEntity("Carlos", "40bd001563085fc35165329ea1ff5c5ecbdbbeef", "carlos@gmail.com",
+//   			 "1970/06/13"); //pass 123
+//    	password="123";
+//    	email="carlos@gmail.com";
+    	searchUser();
+    	//userSession.setLoggedUser(userFacade.findByEmailPass(email, pw.encrypt(password)));
 		ejb.populate();
+//		playlistejb.populatePlaylist();
 //		session.init(ejb.getUser(i));
-		session.init(getLoggedUser());
+		UserEntity usertmp1=getLoggedUser();
+		System.out.println("doLogin() com 'usertmp1.email'= "+usertmp1.getEmail());
+		session.init(usertmp1);
 		redirect();
 	}
 	

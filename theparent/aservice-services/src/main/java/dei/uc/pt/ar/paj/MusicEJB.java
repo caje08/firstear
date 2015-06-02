@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import dei.uc.pt.ar.paj.MusicEntity;
 import dei.uc.pt.ar.paj.UserEntity;
@@ -96,4 +97,38 @@ public class MusicEJB implements MusicEJBLocal {
 		return musicas;
 	}
 
+	 public List<MusicEntity> search(String searchTerm){
+	        TypedQuery<MusicEntity> q;
+	        q = em.createNamedQuery(MusicEntity.FIND_ALL,MusicEntity.class);
+	        q.setParameter("searchTerm","%"+searchTerm+"%");
+	        return q.getResultList();
+	    }
+
+	 public List<MusicEntity> findOrdered(MusicEntity.Ordering order, UserEntity owner) {        
+			logger.info("Entrou no metodo findOrdered()...");
+			TypedQuery<MusicEntity> q;
+		        switch (order) {
+		            case FIND_ALL:
+		                q = em.createNamedQuery(MusicEntity.FIND_ALL, MusicEntity.class);
+		                break;
+		            case FIND_BY_OWNER:
+		                q = em.createNamedQuery(MusicEntity.FIND_BY_OWNER, MusicEntity.class);
+		                break;
+		            case FIND_BY_ALBUM:
+		                q = em.createNamedQuery(MusicEntity.FIND_BY_ALBUM, MusicEntity.class);
+		                break;
+		            
+		            default:
+		                return null;
+		        }
+		        if(!order.equals("FIND_ALL"))
+		          q.setParameter("ownerId", owner);
+		        try {
+		            List<MusicEntity> list = q.getResultList();
+		            return list;
+		        } catch (Exception e) {
+		            System.err.println("Ordering error " + e);
+		            return null;
+		        }
+		    }
 }

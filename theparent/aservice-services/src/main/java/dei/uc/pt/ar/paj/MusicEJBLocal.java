@@ -13,4 +13,6 @@ public interface MusicEJBLocal {
 	public void populateMusic();
 	
 	public List<MusicEntity> getMusicas();
+	public List<MusicEntity> findOrdered(MusicEntity.Ordering order, UserEntity owner);
+	public List<MusicEntity> search(String searchTerm);
 }

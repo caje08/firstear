@@ -36,7 +36,10 @@ import org.slf4j.LoggerFactory;
 })
 public class PlaylistEntity implements Serializable {
 
-	public static final String FIND_BY_ID_ASCENDING = "Playlist.orderByCreationDateAscending";
+	public static final String FIND_BY_DATE_ASCENDING = "Playlist.orderByCreationDateAscending";
+	public static final String FIND_BY_DATE_DESCENDING = "Playlist.orderByCreationDateDescending";
+	public static final String FIND_BY_NAME_ASCENDING = "Playlist.orderByNameAscending";
+	public static final String FIND_BY_NAME_DESCENDING = "Playlist.orderByNameAscending";
 	
 	private static final long serialVersionUID = 1L;
 	@Id

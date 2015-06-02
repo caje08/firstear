@@ -21,7 +21,7 @@
 		<!-- Exibe PlayLists do User -->
 		<h:form id="userPlayLists" rendered="#{!render.addMusicToPlayList}">
 			<h:dataTable id="userPlayLists"
-				value="#{activeSession.activeUser.userplaylists}" var="playlist">
+				value="#{activeSession.userplaylistsdisplay}" var="playlist">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="PlayLists:" />
@@ -52,7 +52,7 @@
 					</f:facet>
 					<h:commandButton
 						action="#{activeSession.addMusicToPlayListEnd(playlist)}"
-						value="#{playlist.name}" />
+						value="#{playlist.designacao}" />
 				</h:column>
 			</h:dataTable>
 			<h:commandButton action="#{render.setAddMusicToPlayList(false)}"
@@ -65,6 +65,8 @@
 				<h:inputText value="#{activeSession.newPlayListName}" />
 				<h:commandButton action="#{activeSession.createPlayList()}"
 					value="Create new PlayList" />
+				<h:commandButton action="newoldindex1"
+					value="Create DB Playlist" />
 			</h:form>
 		</div>
 		

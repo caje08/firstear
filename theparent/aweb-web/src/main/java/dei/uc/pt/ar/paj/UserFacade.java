@@ -33,7 +33,7 @@ public class UserFacade extends AbstractFacade<UserEntity> {
     }
     
     public UserEntity findByEmailPass(String email, String password) {
-        TypedQuery<UserEntity> q = em.createNamedQuery("User.findByEmailPass", UserEntity.class);
+        TypedQuery<UserEntity> q = em.createNamedQuery(UserEntity.FIND_BY_EMAIL_AND_PASS, UserEntity.class);
         q.setParameter("email", email);
         q.setParameter("password",password);
         try{

@@ -11,7 +11,8 @@ import dei.uc.pt.ar.paj.UserEntity;
 @Local
 public interface PlaylistEJBLocal {
 	
-	 public void populatePlaylist();	 
+	 public void populatePlaylist();
+	 public void generatePlaylists();
 	 public List<PlaylistEntity> getPlaylists();
-	 public List<PlaylistEntity> findOrdered();
+	 public List<PlaylistEntity> findOrdered(PlaylistEntity.Ordering order, UserEntity owner);
 }

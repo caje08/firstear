@@ -26,5 +26,17 @@
              <artifactId>aservice-services</artifactId>
              <version>${project.version}</version>
           </dependency>
+          <dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4jlog4.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+				<scope>provided</scope>
+			</dependency>
 	</dependencies>
 </project>

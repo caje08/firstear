@@ -61,15 +61,16 @@ public class Login {
 	}
 
 	public void populatePlaylist() {
-		playlistEJB.populatePlaylist();
+//		playlistEJB.populatePlaylist();
+		playlistEJB.generatePlaylists();
 	}
 
 	public List<PlaylistEntity> getPlaylists() {
 		return playlistEJB.getPlaylists();
 	}
-	public List<PlaylistEntity> findOrdered() {
-		return playlistEJB.findOrdered();
-	}
+//	public List<PlaylistEntity> findOrdered() {
+//		return playlistEJB.findOrdered();
+//	}
 
 	public String getUsername() {
 		return username;

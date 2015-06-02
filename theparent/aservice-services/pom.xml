@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>dei.uc.pt.ar.paj</groupId>
-        <artifactId>theparent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+		<artifactId>theparent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>aservice-services</artifactId>
-	<name>aservice-services</name>   
-   	<description>EJB service layer</description>
+	<name>aservice-services</name>
+	<description>EJB service layer</description>
 	<packaging>ejb</packaging>
 
 	<build>
@@ -22,13 +22,25 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-             <groupId>dei.uc.pt.ar.paj</groupId>
-             <artifactId>adomain-domain</artifactId>
-             <version>${project.version}</version>
-          </dependency>
-          <dependency>
-    	<groupId>postgresql</groupId>
-    	<artifactId>postgresql</artifactId>
+			<groupId>dei.uc.pt.ar.paj</groupId>
+			<artifactId>adomain-domain</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4jlog4.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

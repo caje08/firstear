@@ -99,8 +99,8 @@ public class UserEJB implements UserEJBLocal {
             return null;
         }        
     }
-	public List<PlaylistEntity> getPlayByUser() {
-		String owner = "carlosantos3@gmail.com";
+	public List<PlaylistEntity> getPlayByUser(UserEntity owner) {
+		//String owner = "carlosantos3@gmail.com";
 		
 		 TypedQuery<PlaylistEntity> q = em.createNamedQuery(
 		 "Playlist.playByOwnerID", PlaylistEntity.class);

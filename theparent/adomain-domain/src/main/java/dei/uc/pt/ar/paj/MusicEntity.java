@@ -19,10 +19,22 @@ import org.slf4j.LoggerFactory;
 @Table(name="musica")
 @NamedQueries({
     @NamedQuery(name = "Music.findByOwner", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :owner"),
-    @NamedQuery(name = "Music.findBySearch", query = "SELECT m FROM MusicEntity m WHERE m.nomemusica LIKE :searchTerm OR m.interprete LIKE :searchTerm")
+    @NamedQuery(name = "Music.findBySearch", query = "SELECT m FROM MusicEntity m WHERE m.nomemusica LIKE :searchTerm OR m.interprete LIKE :searchTerm"),
+    @NamedQuery(name = "Music.findAll", query="SELECT m FROM MusicEntity m"),
+	@NamedQuery(name = "Music.findByInterprete", query="SELECT m FROM MusicEntity m WHERE m.interprete like :interprete"),
+	@NamedQuery(name = "Music.findByNomeMusica", query="SELECT m FROM MusicEntity m WHERE m.nomemusica like :title"),
+	@NamedQuery(name = "Music.findByAlbum", query="SELECT m FROM MusicEntity m WHERE m.album like :album"),
+	@NamedQuery(name = "Music.findByAno", query="SELECT m FROM MusicEntity m WHERE m.anolancamento like :year"),
+//	@NamedQuery(name = "Music.findByUser", query="SELECT m FROM MusicEntity m WHERE m.utilizador like :user"),
     })
 public class MusicEntity implements Serializable {
 
+	public static final String FIND_ALL = "Music.findAll";
+	public static final String FIND_BY_INTERPRETE = "Music.findByInterprete";
+	public static final String FIND_BY_NOMEMUSICA = "Music.findByNomeMusica";
+	public static final String FIND_BY_ALBUM = "Music.findByAlbum";
+	public static final String FIND_BY_ANO = "Music.findByAno";
+	public static final String FIND_BY_OWNER = "Music.findByOwner";
 
 	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,7 +56,7 @@ public class MusicEntity implements Serializable {
 	
 	@NotNull
     @Column(name = "time")
-	private String length;
+	private double length;
 //
     @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "userid", nullable = false)
@@ -61,8 +73,11 @@ public class MusicEntity implements Serializable {
 	private String datamusica;
     
     @Column(name = "tipomusica", nullable = false)
-	private String tipomusica;
-	
+	private String tipomusica;  
+    
+    public static enum Ordering {
+		FIND_ALL, FIND_BY_INTERPRETE, FIND_BY_NOMEMUSICA, FIND_BY_ALBUM, FIND_BY_ANO, FIND_BY_OWNER
+	};
 	static Logger logger = LoggerFactory.getLogger(MusicEntity.class); 
 	
 	public MusicEntity() {
@@ -81,6 +96,7 @@ public class MusicEntity implements Serializable {
 		this.path = path;
 		this.datamusica = datamusica;
 		this.tipomusica = tipomusica;
+		this.length=0;
 	}
 
 	public Long getMusicid(){
@@ -99,11 +115,11 @@ public class MusicEntity implements Serializable {
 		this.musicid = musicid;
 	}
 
-	public String getLength() {
+	public double getLength() {
 		return length;
 	}
 
-	public void setLength(String length) {
+	public void setLength(double length) {
 		this.length = length;
 	}
 

@@ -23,7 +23,7 @@ and open the template in the editor.
             <h:outputLabel value="Password"/>
             <h:inputSecret value="#{loginMB.password}"/>
             <br></br>
-            <h:commandButton action="#{loginMB.searchUser()}" value="Submit" />
+            <h:commandButton action="#{loginMB.doLogin()}" value="Submit" />
             <h:commandButton value="New User" action="registry"/>
             <br></br>
             <h:outputText value="#{loginMB.errorMessage}"/>

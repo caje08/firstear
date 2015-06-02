@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +35,11 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 	private UserEJB teste;
 	private PlaylistEntity.Ordering order; 
 	
-	private UserEntity usertmp1;
-	private UserEntity usertmp2;
+	private UserEntity usertmp1= new UserEntity("Carlos", "40bd001563085fc35165329ea1ff5c5ecbdbbeef", "carlosantos3@gmail.com",
+			 "1970/06/13"); //pass 123
+	private UserEntity	usertmp2 = new UserEntity("Duarte", "51eac6b471a284d3341d8c0c63d0f1a286262a18", "duarte3@gmail.com",
+					"1985/10/21"); //pass 456
+	private ArrayList<MusicEntity> musics=new ArrayList<MusicEntity>();
 	private String dataddmusic;
 	private MusicEntity musica1, musica2, musica3, musica4, musica5, musica6,
 			musica7, musica8, musica9, musica10, musica11, musica12;
@@ -51,22 +55,138 @@ public class PlaylistEJB implements PlaylistEJBLocal {
         order = PlaylistEntity.Ordering.DATE_ASCEND;
     }
 	
+	public void generatePlaylists() {
+		int i, j;
+		int trackIndex;
+		String dia="", mes="",ano="", data="";
+		Random r = new Random();
+		
+		// List<UserEntity> arrusers;
+		generateMusics();
+		// arrusers=userejb.getUsers();
+	
+		for (j = 0; j < 10; j++) {
+			ArrayList<MusicEntity> newMusics = new ArrayList<MusicEntity>();
+			
+			for (i = 0; i < 10; i++) {
+				trackIndex = r.nextInt(this.musics.size());
+				newMusics.add(musics.get(trackIndex));
+			}
+			dia=Integer.toString(1+r.nextInt(30));
+			mes=Integer.toString(1+r.nextInt(11));
+			ano="20"+Integer.toString(1+r.nextInt(14));
+			if(ano.length()==3)
+				ano=ano+"0";
+			data=ano+"/"+mes+"/"+dia;
+			
+			PlaylistEntity pl1 = new PlaylistEntity();
+			pl1.setDesignacao("Duarte " + j);
+//			pl1.setDesignacao("Duarte " + 1);
+			pl1.setSongs(newMusics);
+			pl1.setDatacriacao(data);
+			pl1.setUtilizador(usertmp2);
+			// pl1.setUtilizador(arrusers.get(1));
+//			em.persist(new PlaylistEntity("playlist1", musics, "2015/04/14",
+//					usertmp1));
+//			playLists.add(pl1);
+			em.persist(pl1);
+		}
+
+		for (j = 0; j < 10; j++) {
+			ArrayList<MusicEntity> newMusics = new ArrayList<MusicEntity>();
+
+			for (i = 0; i < 10; i++) {
+				trackIndex = r.nextInt(this.musics.size());
+				newMusics.add(musics.get(trackIndex));
+			}
+			dia=Integer.toString(1+r.nextInt(30));
+			mes=Integer.toString(1+r.nextInt(11));
+			ano="20"+Integer.toString(1+r.nextInt(14));
+			if(ano.length()==3)
+				ano=ano+"0";
+			data=ano+"/"+mes+"/"+dia;
+			PlaylistEntity pl1 = new PlaylistEntity();
+			pl1.setDesignacao("Carlos " + j);
+//			pl1.setDesignacao("Carlos " + 0);
+			pl1.setSongs(newMusics);
+			pl1.setDatacriacao(data);
+			// pl1.setUtilizador(arrusers.get(0));
+			pl1.setUtilizador(usertmp1);
+
+//			playLists.add(pl1);
+			em.persist(pl1);
+		}
+	}
+
+	private void generateMusics() {
+		int i;
+//		this.date = new Date();
+//		List<UserEntity> arrusers = null;
+		// arrusers=userejb.getUsers();
+		// String nomemusica,
+		// String interprete,
+		// String album,
+		// String anolancamento,
+		// UserEntity owner,
+		// String path,
+		// String datamusica,
+		// String tipomusica
+
+		for (i = 0; i < 10; i++) {
+			MusicEntity m = new MusicEntity("Track" + i, "The Shins",
+					"Port of Morrow", "2015", usertmp1, "path",
+					"2015/05/28", "Generico");
+			// MusicEntity m1=new MusicEntity("Track"+i, "The Shins",
+			// "Port of Morrow", "2015", arrusers.get(0), "path", "2015/05/28",
+			// "Gen�rico");
+			musics.add(m);
+			em.persist(m);
+		}
+
+		for (i = 0; i < 10; i++) {
+			MusicEntity m = new MusicEntity("Track" + i, "The Shins",
+					"Oh The Inverted World", "2015", usertmp1, "path",
+					"2015/05/28", "Generico");
+			musics.add(m);
+			em.persist(m);
+		}
+
+		for (i = 0; i < 10; i++) {
+			MusicEntity m = new MusicEntity("Track" + i, "Coldplay",
+					"Parachutes", "2015", usertmp2, "path",
+					"2015/05/28", "Generico");
+			musics.add(m);
+			em.persist(m);
+		}
+
+		for (i = 0; i < 10; i++) {
+			MusicEntity m = new MusicEntity("Track" + i, "Coldplay",
+					"A Rush Of Blood To The Head", "2015", usertmp2,
+					"path", "2015/05/28", "Generico");
+			musics.add(m);
+			em.persist(m);
+		}
+		
+	}
+	
 	public void populatePlaylist() {
 		
-		List<UserEntity> lstusers=null;
 		ArrayList<MusicEntity> musics = new ArrayList<MusicEntity>();
-		dataddmusic = "2015/01/10";
-		System.out.println("Users.size="+lstusers.size());
-		lstusers=teste.getUsers();
-		System.out.println("Users.size="+lstusers.size());
-		usertmp1=lstusers.get(1);
-		System.out.println("User1="+usertmp1.getEmail());
-		usertmp2=lstusers.get(2);
-		System.out.println("User1="+usertmp2.getEmail());
-		// usertmp1 = new UserEntity("Carlos", "123", "carlosantos3@gmail.com",
-		// "1970/06/13");
-//		usertmp2 = new UserEntity("Duarte", "456", "duarte3@gmail.com",
-//				"1985/10/21");
+//		List<UserEntity> lstusers=null;
+		
+//		dataddmusic = "2015/01/10";
+//		System.out.println("Users.size="+lstusers.size());
+//		lstusers=teste.getUsers();
+//		System.out.println("Users.size="+lstusers.size());
+//		usertmp1=lstusers.get(1);
+//		System.out.println("User1="+usertmp1.getEmail());
+//		usertmp2=lstusers.get(2);
+//		System.out.println("User1="+usertmp2.getEmail());
+//		
+		usertmp1 = new UserEntity("Carlos", "123", "carlosantos3@gmail.com",
+		 "1970/06/13");
+		usertmp2 = new UserEntity("Duarte", "456", "duarte3@gmail.com",
+				"1985/10/21");
 
 		musica1 = new MusicEntity("nomemusic1", "interpret1", "album1", "2013",
 				usertmp1, "c:\\path1", "2015/02/20", "tipo1");
@@ -162,6 +282,7 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 		musics.add(musica3);
 		em.persist(new PlaylistEntity("playlist12", musics, "2015/05/19",
 				usertmp1));
+		
 	}
 
 	@Override
@@ -191,28 +312,29 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 		return playlists;
 	}
 	
-//	public List<PlaylistEntity> findOrdered(PlaylistEntity.Ordering order, UserEntity owner) {
-	public List<PlaylistEntity> findOrdered() {        
-		logger.info("Entrou no metodo...");
+	public List<PlaylistEntity> findOrdered(PlaylistEntity.Ordering order, UserEntity owner) {
+//	public List<PlaylistEntity> findOrdered() {        
+		logger.info("Entrou no metodo findOrdered() em PlaylistEJB.java ...");
 		TypedQuery<PlaylistEntity> q;
 	        switch (order) {
 	            case NAME_ASCEND:
-	                q = em.createNamedQuery("Playlist.orderByNameAscending", PlaylistEntity.class);
+	                q = em.createNamedQuery(PlaylistEntity.FIND_BY_NAME_ASCENDING, PlaylistEntity.class);
 	                break;
 	            case NAME_DESCEND:
-	                q = em.createNamedQuery("PlaylistByNameDescending", PlaylistEntity.class);
+	                q = em.createNamedQuery(PlaylistEntity.FIND_BY_NAME_DESCENDING, PlaylistEntity.class);
 	                break;
 	            case DATE_ASCEND:
-	                q = em.createNamedQuery(PlaylistEntity.FIND_BY_ID_ASCENDING, PlaylistEntity.class);
+	                q = em.createNamedQuery(PlaylistEntity.FIND_BY_DATE_ASCENDING, PlaylistEntity.class);
 	                break;
 	            case DATE_DESCEND:
-	                q = em.createNamedQuery("Playlist.orderByCreationDateDescending", PlaylistEntity.class);
+	                q = em.createNamedQuery(PlaylistEntity.FIND_BY_DATE_DESCENDING, PlaylistEntity.class);
 	                break;
 
 	            default:
 	                return null;
 	        }
-	        q.setParameter("ownerId", usertmp1);
+	        q.setParameter("ownerId", owner);
+	        System.out.println("Depois do setParameter");
 	        try {
 	            List<PlaylistEntity> list = q.getResultList();
 	            return list;
@@ -223,26 +345,4 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 	    }
 
 
-//	public List<PlaylistEntity> getPlayByOwner() {
-//		String owner = "carlosantos3@gmail.com";
-		// if (usertmp1 != null) {
-		// TypedQuery<PlaylistEntity> q = em.createNamedQuery(
-		// "Playlist.playByOwnerID", PlaylistEntity.class);
-		// q.setParameter("utilizador", owner);
-		// try {
-		// return q.getResultList();
-		// } catch (Exception e) {
-		// System.err.println("Single result not found: " + e);
-		// return null;
-		// }
-		// }else
-		// return null;
-//		System.out.println("Owner=" + owner);
-//		Query q = em.createQuery("from PlaylistEntity p where p.utilizador.email='"
-//				+ owner+"'");
-//		@SuppressWarnings("unchecked")
-//		List<PlaylistEntity> playlists = q.getResultList();
-//		System.out.println("Playlist size=" + playlists.size());
-//		return playlists;
-//	}
 }
