@@ -25,7 +25,7 @@ import dei.uc.pt.ar.paj.EJB.PasswordEJB;
 import dei.uc.pt.ar.paj.EJB.VirtualEJB;
 import dei.uc.pt.ar.paj.Entities.UserEntity;
 import dei.uc.pt.ar.paj.Facade.UserFacade;
-import dei.uc.pt.ar.paj.web.ActiveSession;
+import dei.uc.pt.ar.paj.WEB.ActiveSession;
 
 
 /**

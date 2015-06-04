@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
     @NamedQuery(name = "Music.findByOwner", query = "SELECT m FROM MusicEntity m WHERE m.utilizador = :ownerId"),
     @NamedQuery(name = "Music.findBySearch", query = "SELECT m FROM MusicEntity m WHERE m.nomemusica LIKE :searchTerm OR m.interprete LIKE :searchTerm"),
     @NamedQuery(name = "Music.findAll", query="SELECT m FROM MusicEntity m"),
-	@NamedQuery(name = "Music.findByInterprete", query="SELECT m FROM MusicEntity m WHERE m.interprete like :interprete"),
-	@NamedQuery(name = "Music.findByNomeMusica", query="SELECT m FROM MusicEntity m WHERE m.nomemusica like :title"),
+	@NamedQuery(name = "Music.findByInterprete", query="SELECT m FROM MusicEntity m WHERE m.interprete LIKE :searchTerm"),
+	@NamedQuery(name = "Music.findByNomeMusica", query="SELECT m FROM MusicEntity m WHERE m.nomemusica LIKE :searchTerm"),
 	@NamedQuery(name = "Music.findByAlbum", query="SELECT m FROM MusicEntity m WHERE m.album like :album"),
 	@NamedQuery(name = "Music.findByAno", query="SELECT m FROM MusicEntity m WHERE m.anolancamento like :year"),
 //	@NamedQuery(name = "Music.findByUser", query="SELECT m FROM MusicEntity m WHERE m.utilizador like :user"),
@@ -35,6 +35,7 @@ public class MusicEntity implements Serializable {
 	public static final String FIND_BY_ALBUM = "Music.findByAlbum";
 	public static final String FIND_BY_ANO = "Music.findByAno";
 	public static final String FIND_BY_OWNER = "Music.findByOwner";
+	public static final String FIND_BY_SEARCH = "Music.findBySearch";
 
 	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -82,6 +83,7 @@ public class MusicEntity implements Serializable {
 	
 	public MusicEntity() {
 		super();
+		this.playlists=new ArrayList<PlaylistEntity>();
 	}
 
 	public MusicEntity(String nomemusica, String interprete, String album,
@@ -97,6 +99,8 @@ public class MusicEntity implements Serializable {
 		this.datamusica = datamusica;
 		this.tipomusica = tipomusica;
 		this.length=0;
+		
+		this.playlists=new ArrayList<PlaylistEntity>();
 	}
 
 	public Long getMusicid(){

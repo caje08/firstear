@@ -1,4 +1,4 @@
-package dei.uc.pt.ar.paj.web;
+package dei.uc.pt.ar.paj.WEB;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -51,7 +51,6 @@ public class EditPlayList implements Serializable {
 	public PlaylistEntity addMusicToPlayListEnd(PlaylistEntity activePlayList){
 		this.playListToEdit=activePlayList;
 		this.playListToEdit.getSongs().add(musicToAddToPlayList);		
-		
 		return this.playListToEdit;
 	}
 	

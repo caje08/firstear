@@ -48,6 +48,8 @@
 			</h:form>
 
 			<h:form rendered="#{render.editUser}">
+				<h:commandButton action="#{activeSession.deleteUser()}"
+					value="Delete Account" />
 				<h:commandButton action="#{activeSession.editUserCancel()}"
 					value="Cancel" />
 			</h:form>
@@ -64,13 +66,16 @@
 				<h:inputText value="#{editMusic.newArtist}" />
 				<h:outputLabel value="Album:" />
 				<h:inputText value="#{editMusic.newAlbum}" />
-				
-				
-				
+
+
+
 				<h:commandButton action="#{activeSession.saveMusicChanges()}"
 					value="Save Changes" />
+				<h:commandButton action="#{activeSession.disassociateMusic()}"
+					value="Disassociate Music" />
 				<h:commandButton action="#{render.setEditMusic(false)}"
 					value="Cancel" />
+
 			</h:form>
 		</div>
 

@@ -1,4 +1,4 @@
-package dei.uc.pt.ar.paj.web;
+package dei.uc.pt.ar.paj.WEB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -24,9 +24,9 @@ public class Player implements Serializable {
 	}
 	
 	public void playMusic(MusicEntity music){
-		if(!music.getPath().equals(""))
-			this.track=music.getPath();
-		this.track = "";
+//		if(!music.getPath().equals(""))
+//			this.track=music.getPath();
+		this.track = "resources/mp3/test.mp3";
 	}
 
 	public String getMusic() {

@@ -1,4 +1,4 @@
-package dei.uc.pt.ar.paj.web;
+package dei.uc.pt.ar.paj.WEB;
 
 import java.util.Date;
 

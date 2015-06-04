@@ -47,15 +47,6 @@ public class MusicFacade extends AbstractFacade<MusicEntity> {
         song.setAlbum(album);
         song.setAnolancamento(releaseYear);
         super.edit(song);
-    }
-    
-    public void updateSong(MusicEntity song){
-        super.edit(song);
-    }
-    
-    public void create(MusicEntity song){
-    	super.create(song);
-    }
-    
+    }   
     
 }

@@ -97,13 +97,6 @@ public class MusicEJB implements MusicEJBLocal {
 		return musicas;
 	}
 
-	public List<MusicEntity> search(String searchTerm){
-		TypedQuery<MusicEntity> q;
-		q = em.createNamedQuery(MusicEntity.FIND_ALL,MusicEntity.class);
-		q.setParameter("searchTerm","%"+searchTerm+"%");
-		return q.getResultList();
-	}
-
 	public List<MusicEntity> findOrdered(MusicEntity.Ordering order, UserEntity owner) {        
 		logger.info("Entrou no metodo findOrdered()...");
 		TypedQuery<MusicEntity> q;
@@ -134,5 +127,28 @@ public class MusicEJB implements MusicEJBLocal {
 	
 	public void createMusic(MusicEntity song){
 		em.persist(song);
+	}
+	
+	public List<MusicEntity> search(String searchTerm){
+		TypedQuery<MusicEntity> q;
+		q = em.createNamedQuery(MusicEntity.FIND_BY_SEARCH,MusicEntity.class);
+		q.setParameter("searchTerm","%"+searchTerm+"%");
+		return q.getResultList();
+	}
+
+	@Override
+	public List<MusicEntity> searchByTrack(String searchTerm) {
+		TypedQuery<MusicEntity> q;
+		q = em.createNamedQuery(MusicEntity.FIND_BY_NOMEMUSICA,MusicEntity.class);
+		q.setParameter("searchTerm","%"+searchTerm+"%");
+		return q.getResultList();
+	}
+
+	@Override
+	public List<MusicEntity> searchByArtist(String searchTerm) {
+		TypedQuery<MusicEntity> q;
+		q = em.createNamedQuery(MusicEntity.FIND_BY_INTERPRETE,MusicEntity.class);
+		q.setParameter("searchTerm","%"+searchTerm+"%");
+		return q.getResultList();
 	}
 }

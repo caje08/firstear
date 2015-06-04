@@ -17,7 +17,7 @@ import dei.uc.pt.ar.paj.EJB.VirtualEJB;
 import dei.uc.pt.ar.paj.Entities.MusicEntity;
 import dei.uc.pt.ar.paj.Entities.PlaylistEntity;
 import dei.uc.pt.ar.paj.Entities.UserEntity;
-import dei.uc.pt.ar.paj.web.ActiveSession;
+import dei.uc.pt.ar.paj.WEB.ActiveSession;
 
 @Named
 @RequestScoped
@@ -68,9 +68,11 @@ public class Login {
 	public List<PlaylistEntity> getPlaylists() {
 		return playlistEJB.getPlaylists();
 	}
-//	public List<PlaylistEntity> findOrdered() {
+	
+	public List<PlaylistEntity> findOrdered() {
 //		return playlistEJB.findOrdered();
-//	}
+		return null;
+	}
 
 	public String getUsername() {
 		return username;

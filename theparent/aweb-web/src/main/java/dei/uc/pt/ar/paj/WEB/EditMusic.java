@@ -1,4 +1,4 @@
-package dei.uc.pt.ar.paj.web;
+package dei.uc.pt.ar.paj.WEB;
 
 import java.util.Date;
 
@@ -36,6 +36,14 @@ public class EditMusic implements Serializable {
 
 	public String getNewName() {
 		return newName;
+	}
+
+	public MusicEntity getMusic() {
+		return music;
+	}
+
+	public void setMusic(MusicEntity music) {
+		this.music = music;
 	}
 
 	public void setNewName(String newName) {

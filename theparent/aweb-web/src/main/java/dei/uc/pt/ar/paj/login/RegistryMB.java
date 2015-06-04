@@ -141,7 +141,7 @@ public class RegistryMB {
 					this.userFacade.create(newUser);
 					loginMB.setEmail(email);
 					loginMB.setPassword(password);
-					loginMB.searchUser();
+					loginMB.doLogin();
 				} catch (Exception e) {
 					errorMessage = "Could not create user due to: "
 							+ e.getCause().getMessage();

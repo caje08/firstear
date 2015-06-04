@@ -1,4 +1,4 @@
-package dei.uc.pt.ar.paj.web;
+package dei.uc.pt.ar.paj.WEB;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -168,33 +168,6 @@ public class ActiveSession implements Serializable {
 		}
 	}
 
-	//	public void orderByName() {
-	//		if (order == PlaylistEntity.Ordering.NAME_ASCEND) {
-	//			order = PlaylistEntity.Ordering.NAME_DESCEND;
-	//		} else {
-	//			order = PlaylistEntity.Ordering.NAME_ASCEND;
-	//		}
-	//		reOrder();
-	//	}
-	//
-	//	public void orderByCreationDate() {
-	//		if (order == PlaylistEntity.Ordering.DATE_ASCEND) {
-	//			order = PlaylistEntity.Ordering.DATE_DESCEND;
-	//		} else {
-	//			order = PlaylistEntity.Ordering.DATE_ASCEND;
-	//		}
-	//		reOrder();
-	//	}
-
-	//	public void orderByNoSongs() {
-	//		if (order == PlaylistEntity.Ordering.SIZE_ASCEND) {
-	//			order = PlaylistEntity.Ordering.SIZE_DESCEND;
-	//		} else {
-	//			order = PlaylistEntity.Ordering.SIZE_ASCEND;
-	//		}
-	//		reOrder();
-	//	}
-
 	public UserEntity getActiveUser() {
 		return activeUser;
 	}
@@ -254,28 +227,28 @@ public class ActiveSession implements Serializable {
 		// queries � EJB
 	}
 
+
 	// Search
 	public void searchMusic() {
 		this.render.browseMusics();
 		this.isSearch = true;
 		// BD
-		this.musicSearch = this.ejb.searchMusic(this.search);
+		this.musicSearch = (ArrayList<MusicEntity>) this.ejb.searchMusic(this.search);
 	}
 
 	public void searchMusicByTrack() {
 		this.render.browseMusics();
 		this.isSearch = true;
 		// BD
-		this.musicSearch = this.ejb.searchMusicByTrack(this.search);
+		this.musicSearch = (ArrayList<MusicEntity>) this.ejb.searchMusicByTrack(this.search);
 	}
 
 	public void searchMusicByArtist() {
 		this.render.browseMusics();
 		this.isSearch = true;
 		// BD
-		this.musicSearch = this.ejb.searchMusicByArtist(this.search);
+		this.musicSearch = (ArrayList<MusicEntity>) this.ejb.searchMusicByArtist(this.search);
 	}
-
 	// Music Browser
 
 
@@ -296,10 +269,7 @@ public class ActiveSession implements Serializable {
 
 		this.activeUser = this.editUser.saveUserChanges();
 
-		// BD
-		//		init(this.ejb.update(this.activeUser));
-		this.userFacade.updateUser(activeUser, activeUser.getName(),
-				activeUser.getEmail(), activeUser.getPassword());
+		this.ejb.update(this.activeUser);
 	}
 
 	public void saveUserPasswordChanges() {
@@ -310,9 +280,39 @@ public class ActiveSession implements Serializable {
 		}
 	}
 
+	public void deleteUser(){
+		this.activePlayList=null;
+		this.editPlayList.setPlayListToEdit(null);
+		
+		this.userplaylistsdisplay=getUserplaylistsdisplay();
+
+		//Remove as Playlists do User
+		for(PlaylistEntity pl:this.userplaylistsdisplay){
+			removePlayList(pl);
+		}
+		
+
+		this.userplaylistsdisplay=new ArrayList <PlaylistEntity>();
+		
+		this.activeUser.setUserplaylists(getUserplaylistsdisplay());
+
+		this.getMusicsByUser = true;
+		this.isSearch = false;
+		
+
+		ArrayList<MusicEntity>musics=getMusicLibrary();
+		UserEntity admin=userFacade.findByEmailPass("admin@admin", "d033e22ae348aeb5660fc2140aec35850c4da997");
+
+		//Desassocia as Músicas
+		for(MusicEntity m:musics){
+			m.setUtilizador(admin);
+			this.ejb.update(m);
+		}
+		
+		this.ejb.remove(this.activeUser);
+		logout();
+	}
 	// User Edits
-
-
 
 
 
@@ -335,11 +335,7 @@ public class ActiveSession implements Serializable {
 
 		// BD
 		this.ejb.update(this.editMusic.saveChanges());
-
-		// BD
-		//		init(this.ejb.update(this.activeUser));
 	}
-
 	// Music Edits
 
 
@@ -356,19 +352,30 @@ public class ActiveSession implements Serializable {
 		if (this.newMusic.verify()) {
 			MusicEntity music = new MusicEntity(this.newMusic.getNewName(),
 					this.newMusic.getNewArtist(), this.newMusic.getNewAlbum(),
-					"2015", this.activeUser, this.newMusic.getPath(), "2015/05/28", "Gen�rico");
-			
+					"2015", this.activeUser, "path", "2015/05/28", "Gen�rico");
+			//BD
 			this.ejb.add(music);
 			this.render.setNewMusic(false);
 		}
-
 	}
 
 	public void newMusicCancel() {
 		this.render.setNewMusic(false);
 	}
-
 	// New Music
+
+	//Disassociate Music
+	public void disassociateMusic() {
+		UserEntity admin=userFacade.findByEmailPass("admin@admin", "d033e22ae348aeb5660fc2140aec35850c4da997");
+		MusicEntity music=this.editMusic.getMusic();
+		music.setUtilizador(admin);
+		this.ejb.update(music);
+		this.render.setEditMusic(false);
+	}
+	//Disassociate Music
+
+
+
 
 	// New PlayList
 	public void createPlayList() {
@@ -376,46 +383,58 @@ public class ActiveSession implements Serializable {
 			PlaylistEntity newPlayList = new PlaylistEntity();
 			newPlayList.setDesignacao(this.newPlayListName);
 			newPlayList.setUtilizador(this.activeUser);
+			newPlayList.setDatacriacao("data");
+
+			this.newPlayListName="";
 
 			// BD
 			this.ejb.add(newPlayList);
-
-			// BD
-			//			init(this.ejb.update(this.activeUser));
 		}
 	}
-
 	// New PlayList
 
 	// Add Music To PlayList
-	public void addMusicToPlayListEnd(PlaylistEntity playList) {
+	public void addMusicToPlayListStart(MusicEntity musicToAddToPlayList){
+		this.editPlayList.addMusicToPlayListStart(musicToAddToPlayList);
+		//		this.
+	}
 
+	public void addMusicToPlayListEnd(PlaylistEntity playList) {
 		this.activePlayList = this.editPlayList.addMusicToPlayListEnd(playList);
 
 		// BD
-		this.activePlayList = this.ejb.update(this.activePlayList);
+		this.ejb.update(this.editPlayList.getMusicToAddToPlayList());
+		this.ejb.update(this.activePlayList);
 
 		this.render.setEditPlayList(true);
 		this.render.setAddMusicToPlayList(false);
 	}
-
 	// Add Music To PlayList
+
+	//Remove music from Playlist
+	public void removeMusicFromPlayList(MusicEntity music){
+		this.editPlayList.removeMusicFromPlayList(music);
+		this.ejb.update(this.activePlayList);
+	}
+	//Remove music from Playlist
+
+
 
 	// Remove PlayList
 	public void removePlayList(PlaylistEntity playList) {
 		this.render.init();
 
+		List <MusicEntity>emptyList=new ArrayList <MusicEntity>();
+		playList.setSongs(emptyList);
+		playList.setUtilizador(null);
+
 		// BD
 		this.ejb.remove(playList);
-
-		// Vai fora depois da DB?
-		this.activeUser.setUserplaylists(this.ejb.getPlayLists(activeUser));
-
-		// //BD
-		// this.userPlayLists=this.ejb.getPlayLists(this.activeUser);
 	}
-
 	// Remove PlayList
+
+
+
 
 	// Logout
 	public void logout() {
@@ -438,8 +457,11 @@ public class ActiveSession implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
 	// Logout
+
+
+
+
 
 	// In�cio e Fim da sess�o http
 	public void startSession() {

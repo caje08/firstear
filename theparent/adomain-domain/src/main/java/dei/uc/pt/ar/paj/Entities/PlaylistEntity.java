@@ -74,6 +74,7 @@ public class PlaylistEntity implements Serializable {
 
 	public PlaylistEntity() {
 		super();
+		this.songs=new ArrayList<MusicEntity>();		
 	}
 
 	public PlaylistEntity(String designacao, ArrayList<MusicEntity> m,
@@ -84,6 +85,13 @@ public class PlaylistEntity implements Serializable {
 		this.songs = m;
 		this.datacriacao = datacriacao;
 		this.utilizador = utilizador;
+	}
+	
+	public int getNumSongs (){
+		return this.songs.size();
+	}
+	
+	public void setNumSongs (int numSongs){
 	}
 
 	public Long getIdPlaylist() {

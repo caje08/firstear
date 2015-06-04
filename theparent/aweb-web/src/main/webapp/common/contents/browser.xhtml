@@ -86,7 +86,7 @@
 						<h:outputText value=" " />
 					</f:facet>
 					<h:commandButton
-						action="#{editPlayList.removeMusicFromPlayList(music)}"
+						action="#{activeSession.removeMusicFromPlayList(music)}"
 						value="remove" />
 				</h:column>
 
@@ -158,7 +158,7 @@
 						<h:outputText value=" " />
 					</f:facet>
 					<h:commandButton
-						action="#{editPlayList.addMusicToPlayListStart(music)}"
+						action="#{activeSession.addMusicToPlayListStart(music)}"
 						value="Add to Playlist" />
 				</h:column>
 

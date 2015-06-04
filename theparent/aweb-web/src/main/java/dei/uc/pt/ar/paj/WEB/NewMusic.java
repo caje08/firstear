@@ -1,12 +1,14 @@
-package dei.uc.pt.ar.paj.web;
+package dei.uc.pt.ar.paj.WEB;
 
 import java.util.Date;
 
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import dei.uc.pt.ar.paj.Entities.MusicEntity;
 import dei.uc.pt.ar.paj.Entities.UserEntity;
+//import dei.uc.pt.ar.paj.upload.Upload;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -39,7 +41,7 @@ public class NewMusic implements Serializable {
 	private UserEntity user;
 
 	public void init(){
-		//		this.upload.init();
+//		this.upload.init();
 		this.path=this.newAlbum=this.newArtist=this.newName="";
 	}
 
@@ -53,15 +55,17 @@ public class NewMusic implements Serializable {
 		if(this.newName.equals(""))
 			return false;
 
-		//		if(!this.upload.validExtension()){
-		//			return false;
-		//		}
-		//		
-		//Faz o Upload neste ponto
-		//		this.upload.upload();
-		//		this.path=this.upload.getPath();			
+//		if(!this.upload.validExtension()){
+//			return false;
+//		}
+
 		return true;
 	}
+
+//	public String uploadFile(Long musicId){
+//		//Faz o Upload neste ponto
+//		return this.upload.upload(musicId);
+//	}
 
 	public String getNewName() {
 		return newName;

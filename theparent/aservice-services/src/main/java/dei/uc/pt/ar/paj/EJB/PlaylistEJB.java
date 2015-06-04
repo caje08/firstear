@@ -39,6 +39,9 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 			 "1970/06/13"); //pass 123
 	private UserEntity	usertmp2 = new UserEntity("Duarte", "51eac6b471a284d3341d8c0c63d0f1a286262a18", "duarte3@gmail.com",
 					"1985/10/21"); //pass 456
+	private UserEntity	usertmp3 = new UserEntity("Admin", "d033e22ae348aeb5660fc2140aec35850c4da997", "admin@admin",
+			"1985/10/21"); //pass 456
+	
 	private ArrayList<MusicEntity> musics=new ArrayList<MusicEntity>();
 	private String dataddmusic;
 	private MusicEntity musica1, musica2, musica3, musica4, musica5, musica6,
@@ -62,7 +65,13 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 		Random r = new Random();
 		
 		// List<UserEntity> arrusers;
+		em.persist(usertmp3);
 		generateMusics();
+		PlaylistEntity newPlayList = new PlaylistEntity();
+		newPlayList.setDesignacao("Default");
+		newPlayList.setUtilizador(usertmp3);
+		newPlayList.setDatacriacao("Default");
+		em.persist(newPlayList);
 		// arrusers=userejb.getUsers();
 	
 		for (j = 0; j < 10; j++) {
@@ -187,6 +196,7 @@ public class PlaylistEJB implements PlaylistEJBLocal {
 		 "1970/06/13");
 		usertmp2 = new UserEntity("Duarte", "456", "duarte3@gmail.com",
 				"1985/10/21");
+		
 
 		musica1 = new MusicEntity("nomemusic1", "interpret1", "album1", "2013",
 				usertmp1, "c:\\path1", "2015/02/20", "tipo1");
